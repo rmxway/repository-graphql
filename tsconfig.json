@@ -36,6 +36,14 @@
 			"@/src/*": ["./src/*"]
 		}
 	},
-	"include": ["codegen.ts", "src", "pages", "shared", "vite.config.ts"],
+	"include": [
+		"codegen.ts",
+		"src",
+		"pages",
+		"shared",
+		"widgets",
+		"vite.config.ts",
+		"@types"
+	],
 	"exclude": ["node_modules", ".yarn"]
 }

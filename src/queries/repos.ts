@@ -6,7 +6,7 @@ export const Repos = graphql(/* GraphQL */ `
 			login
 			name
 			repositories(
-				first: 10
+				first: 2
 				orderBy: { field: UPDATED_AT, direction: DESC }
 			) {
 				pageInfo {

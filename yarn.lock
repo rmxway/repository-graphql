@@ -700,7 +700,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.17.8":
   version: 7.24.7
   resolution: "@babel/runtime@npm:7.24.7"
   dependencies:
@@ -7064,6 +7064,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"polished@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "polished@npm:4.3.1"
+  dependencies:
+    "@babel/runtime": "npm:^7.17.8"
+  checksum: 10c0/45480d4c7281a134281cef092f6ecc202a868475ff66a390fee6e9261386e16f3047b4de46a2f2e1cf7fb7aa8f52d30b4ed631a1e3bcd6f303ca31161d4f07fe
+  languageName: node
+  linkType: hard
+
 "popmotion@npm:11.0.3":
   version: 11.0.3
   resolution: "popmotion@npm:11.0.3"
@@ -7457,6 +7466,7 @@ __metadata:
     eslint-plugin-unused-imports: "npm:^4.0.0"
     graphiql: "npm:^3.3.2"
     graphql: "npm:^16.9.0"
+    polished: "npm:^4.3.1"
     prettier: "npm:^3.3.2"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
