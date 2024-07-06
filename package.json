@@ -13,6 +13,8 @@
 	"dependencies": {
 		"@apollo/client": "^3.10.8",
 		"@graphiql/toolkit": "^0.9.1",
+		"effector": "^23.2.2",
+		"effector-react": "^23.2.1",
 		"graphiql": "^3.3.2",
 		"graphql": "^16.9.0",
 		"polished": "^4.3.1",

@@ -1,12 +1,12 @@
 import { graphql } from '@/src/gql';
 
 export const Repos = graphql(/* GraphQL */ `
-	query GetRepos {
+	query GetRepos($perPage: Int!) {
 		viewer {
 			login
 			name
 			repositories(
-				first: 2
+				first: $perPage
 				orderBy: { field: UPDATED_AT, direction: DESC }
 			) {
 				pageInfo {

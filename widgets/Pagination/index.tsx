@@ -7,12 +7,14 @@ interface PaginationProps {
 	page: number;
 	items: number;
 	itemsPerPage: number;
+	changePage: (page: number) => void;
 }
 
 export const Pagination: FC<PaginationProps> = ({
 	items,
 	itemsPerPage,
 	page,
+	changePage,
 }) => {
 	const pages = Math.ceil(items / itemsPerPage);
 	const maxButtonsCount = 4;
@@ -26,7 +28,11 @@ export const Pagination: FC<PaginationProps> = ({
 		for (let i = 0; i < pages; i++) {
 			const currentPage = i + 1;
 			arrButtons[i] = (
-				<Button key={i} $secondary={page === currentPage}>
+				<Button
+					key={i}
+					$secondary={page === currentPage}
+					onClick={() => changePage(currentPage)}
+				>
 					{currentPage}
 				</Button>
 			);
