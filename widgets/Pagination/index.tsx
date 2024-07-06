@@ -44,7 +44,7 @@ export const Pagination: FC<PaginationProps> = ({
 	/* const start: number = page - 3 < 0 ? 0 : page - 3;
 	const end: number = page <= 2 ? countButtons : page + 1; */
 
-	return (
+	return items > itemsPerPage && (
 		<>
 			<Grid $gap={4} $direction="column" $mb={10}>
 				{...renderButtons()}

@@ -1,12 +1,15 @@
 import { graphql } from '@/src/gql';
 
 export const Repos = graphql(/* GraphQL */ `
-	query GetRepos($perPage: Int!) {
+	query GetRepos($limit: Int!, $after: String) {
 		viewer {
 			login
 			name
 			repositories(
-				first: $perPage
+				first: $limit				
+				after: $after
+				ownerAffiliations:OWNER
+				visibility: PUBLIC
 				orderBy: { field: UPDATED_AT, direction: DESC }
 			) {
 				pageInfo {
@@ -16,8 +19,11 @@ export const Repos = graphql(/* GraphQL */ `
 					hasPreviousPage
 				}
 				totalCount
-				nodes {
-					...RepositoryOnMainPage
+				edges {
+					cursor
+					node {
+						...RepositoryOnMainPage
+					}
 				}
 			}
 		}
@@ -27,6 +33,9 @@ export const Repos = graphql(/* GraphQL */ `
 export const RepositoryOnMainPage = graphql(`
 	fragment RepositoryOnMainPage on Repository {
 		name
+		owner {
+			login
+		}
 		url
 		updatedAt
 	}
