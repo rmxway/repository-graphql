@@ -1,3 +1,5 @@
+import '@/src/assets/fonts/icofont/icofont.scss';
+
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

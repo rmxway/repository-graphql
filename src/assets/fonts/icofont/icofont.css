@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'icofont';
+    src: url(".//icofont.ttf?2259580297745bfc9707213470b1d5c9") format("truetype"),
+url(".//icofont.woff?2259580297745bfc9707213470b1d5c9") format("woff"),
+url(".//icofont.woff2?2259580297745bfc9707213470b1d5c9") format("woff2");
+}
+
+i[class^='icofont-']:before, i[class*=' icofont-']:before {
+    font-family: icofont !important;
+    font-style: normal;
+    font-size: 1.5rem;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 4;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icofont-star:before {
+    content: '\f101';
+}
+.icofont-star-filled:before {
+    content: '\f102';
+}

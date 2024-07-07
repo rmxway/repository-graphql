@@ -79,6 +79,7 @@ module.exports = {
 		],
 		'unused-imports/no-unused-imports': 'error',
 		'react/react-in-jsx-scope': 'off',
+		'react/display-name': 'off',
 		'@typescript-eslint/no-unsafe-assignment': 'off',
 	},
 };

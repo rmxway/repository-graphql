@@ -14,7 +14,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n\tquery GetRepos($limit: Int!, $after: String) {\n\t\tviewer {\n\t\t\tlogin\n\t\t\tname\n\t\t\trepositories(\n\t\t\t\tfirst: $limit\t\t\t\t\n\t\t\t\tafter: $after\n\t\t\t\townerAffiliations:OWNER\n\t\t\t\tvisibility: PUBLIC\n\t\t\t\torderBy: { field: UPDATED_AT, direction: DESC }\n\t\t\t) {\n\t\t\t\tpageInfo {\n\t\t\t\t\tstartCursor\n\t\t\t\t\tendCursor\n\t\t\t\t\thasNextPage\n\t\t\t\t\thasPreviousPage\n\t\t\t\t}\n\t\t\t\ttotalCount\n\t\t\t\tedges {\n\t\t\t\t\tcursor\n\t\t\t\t\tnode {\n\t\t\t\t\t\t...RepositoryOnMainPage\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.GetReposDocument,
-    "\n\tfragment RepositoryOnMainPage on Repository {\n\t\tname\n\t\towner {\n\t\t\tlogin\n\t\t}\n\t\turl\n\t\tupdatedAt\n\t}\n": types.RepositoryOnMainPageFragmentDoc,
+    "\n\tfragment RepositoryOnMainPage on Repository {\n\t\tname\t\t\n\t\turl\n\t\tupdatedAt\n\t\tstargazerCount\n\t}\n": types.RepositoryOnMainPageFragmentDoc,
+    "\n\tquery SearchRepos($query: String!, $after: String) {\n\t\tsearch(type: REPOSITORY, first: 10, after: $after, query: $query) {\n\t\t\trepositoryCount\n\t\t\tnodes {\n\t\t\t\t... on Repository {\n\t\t\t\t\tname\n\t\t\t\t\turl\n\t\t\t\t\tupdatedAt\n\t\t\t\t\tstargazerCount\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.SearchReposDocument,
 };
 
 /**
@@ -38,7 +39,11 @@ export function graphql(source: "\n\tquery GetRepos($limit: Int!, $after: String
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n\tfragment RepositoryOnMainPage on Repository {\n\t\tname\n\t\towner {\n\t\t\tlogin\n\t\t}\n\t\turl\n\t\tupdatedAt\n\t}\n"): (typeof documents)["\n\tfragment RepositoryOnMainPage on Repository {\n\t\tname\n\t\towner {\n\t\t\tlogin\n\t\t}\n\t\turl\n\t\tupdatedAt\n\t}\n"];
+export function graphql(source: "\n\tfragment RepositoryOnMainPage on Repository {\n\t\tname\t\t\n\t\turl\n\t\tupdatedAt\n\t\tstargazerCount\n\t}\n"): (typeof documents)["\n\tfragment RepositoryOnMainPage on Repository {\n\t\tname\t\t\n\t\turl\n\t\tupdatedAt\n\t\tstargazerCount\n\t}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n\tquery SearchRepos($query: String!, $after: String) {\n\t\tsearch(type: REPOSITORY, first: 10, after: $after, query: $query) {\n\t\t\trepositoryCount\n\t\t\tnodes {\n\t\t\t\t... on Repository {\n\t\t\t\t\tname\n\t\t\t\t\turl\n\t\t\t\t\tupdatedAt\n\t\t\t\t\tstargazerCount\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery SearchRepos($query: String!, $after: String) {\n\t\tsearch(type: REPOSITORY, first: 10, after: $after, query: $query) {\n\t\t\trepositoryCount\n\t\t\tnodes {\n\t\t\t\t... on Repository {\n\t\t\t\t\tname\n\t\t\t\t\turl\n\t\t\t\t\tupdatedAt\n\t\t\t\t\tstargazerCount\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

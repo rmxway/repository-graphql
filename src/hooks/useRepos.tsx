@@ -2,8 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useUnit } from 'effector-react';
 import { useEffect } from 'react';
 
-import { GetReposQuery, GetReposQueryVariables } from '@/src/gql/graphql';
-import { Repos } from '@/src/queries/repos';
+import { GetRepos } from '@/src/queries/repos';
 import { $repos, setCursors, setPerPage, setRepos } from '@/src/store';
 
 interface UseReposProps {
@@ -12,10 +11,7 @@ interface UseReposProps {
 }
 
 export const useRepos = ({ limit, perPage }: UseReposProps) => {
-	const { error, loading, data, refetch } = useQuery<
-		GetReposQuery,
-		GetReposQueryVariables
-	>(Repos, {
+	const { error, loading, data, refetch } = useQuery(GetRepos, {
 		variables: {
 			limit,
 			after: null,

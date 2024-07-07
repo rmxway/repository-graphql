@@ -1,0 +1,21 @@
+module.exports = {
+	inputDir: './fantasticon/icons', // (required)
+	outputDir: './src/assets/fonts/icofont', // (required)
+	fontTypes: ['ttf', 'woff', 'woff2'],
+	assetTypes: ['scss', 'json', 'html', 'css'],
+	fontsUrl: './',
+	// Use a custom Handlebars template
+	templates: {
+		css: './fantasticon/css.hbs',
+		scss: './fantasticon/scss.hbs',
+		html: './fantasticon/html.hbs',
+	},
+	// Customize generated icon IDs (unavailable with `.json` config file)
+	getIconId: ({
+		basename, // `string` - Example: 'foo';
+		relativeDirPath, // `string` - Example: 'sub/dir/foo.svg'
+		absoluteFilePath, // `string` - Example: '/var/icons/sub/dir/foo.svg'
+		relativeFilePath, // `string` - Example: 'foo.svg'
+		index, // `number` - Example: `0`
+	}) => [basename].join('_'), // '0_foo'
+};

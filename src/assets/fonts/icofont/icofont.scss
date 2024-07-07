@@ -1,0 +1,35 @@
+$icofont-font: 'icofont';
+
+@font-face {
+    font-family: $icofont-font;
+    src: url(".//icofont.ttf?2259580297745bfc9707213470b1d5c9") format("truetype"),
+url(".//icofont.woff?2259580297745bfc9707213470b1d5c9") format("woff"),
+url(".//icofont.woff2?2259580297745bfc9707213470b1d5c9") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+
+.icofont {
+    font-family: $icofont-font !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    font-size: 1rem;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+$icofont-map: (
+    'star': '\f101',
+    'star-filled': '\f102',
+);
+
+.icofont-star:before {
+    content: map-get($icofont-map, 'star');
+}
+.icofont-star-filled:before {
+    content: map-get($icofont-map, 'star-filled');
+}

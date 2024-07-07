@@ -1,6 +1,6 @@
 import { graphql } from '@/src/gql';
 
-export const Repos = graphql(/* GraphQL */ `
+export const GetRepos = graphql(/* GraphQL */ `
 	query GetRepos($limit: Int!, $after: String) {
 		viewer {
 			login
@@ -32,11 +32,9 @@ export const Repos = graphql(/* GraphQL */ `
 
 export const RepositoryOnMainPage = graphql(`
 	fragment RepositoryOnMainPage on Repository {
-		name
-		owner {
-			login
-		}
+		name		
 		url
 		updatedAt
+		stargazerCount
 	}
 `);

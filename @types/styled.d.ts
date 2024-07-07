@@ -5,6 +5,7 @@ export interface Colors {
 	secondary: string;
 	danger: string;
 	dark: string;
+	warn: string;
 	gray: {
 		$1: string;
 		$2: string;

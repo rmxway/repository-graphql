@@ -6,12 +6,14 @@ import { Colors } from '@/@types/styled';
 const primary = '#d930d6';
 const secondary = '#3ad974';
 const danger = '#ec3c3c';
+const warn = '#f8c43f';
 
-const colors: Colors = {
+export const colors: Colors = {
 	primary,
 	secondary,
 	danger,
 	dark: desaturate(0.9, darken(0.2, secondary)),
+	warn, 
 	gray: {
 		$1: '#f3f3f3',
 		$2: '#e3e3e3',

@@ -1,10 +1,10 @@
 import { useUnit } from 'effector-react';
 
-import { Input, Loader } from '@/shared';
+import { Loader } from '@/shared';
 import { RepositoryCard } from '@/shared/RepositoryCard';
 import useRepos from '@/src/hooks/useRepos';
 import { $pagination, setPage } from '@/src/store';
-import { Pagination } from '@/widgets';
+import { Pagination, Search } from '@/widgets';
 
 import { GridForRepos } from './styled';
 
@@ -21,7 +21,7 @@ export const MainPage = () => {
 
 	return (
 		<>
-			<Input id="search" type="text" placeholder="Search repositories" />
+			<Search />
 			{loading && <Loader isLoading />}
 			{!error && !loading && viewer && (
 				<>

@@ -1,29 +1,33 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const RepositoryCardWrapper = styled.div`
-    position: relative;
-    background-color: #fff;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    padding: 10px;
-    border-radius: 8px;
-    transition: .2s;
+	position: relative;
+	background-color: #fff;
+	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+	padding: 10px;
+	border-radius: 8px;
+	transition: 0.2s;
 
-    &:hover {
-        top: -1px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-    
-    display: grid;
-    grid-auto-flow: row;
-    justify-content: start;
-    gap: 4px;
+	&:hover {
+		top: -1px;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+	}
 
-    & > span {
-        font-size: 1.25rem;
-    }
+	display: grid;
+	grid-auto-flow: row;
+	justify-content: start;
+	gap: 4px;
+`;
 
-    div {
-        display: flex;
-        flex-direction: column;
-    }
+export const TopBlock = styled.div`
+	position: relative;
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+
+	& > span {
+		font-size: 1.25rem;
+		display: inline-block;
+		margin-right: 10px;
+	}
 `;
