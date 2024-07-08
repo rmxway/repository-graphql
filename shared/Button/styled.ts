@@ -43,7 +43,7 @@ export const ButtonUI = styled.button<ButtonUIProps>`
 		padding: 0 10px;
 		color: #222;
 		border-radius: 8px;
-		transition: 0.1s;
+		// transition: 0.1s;
 		cursor: pointer;
 
 		background-color: #eee;

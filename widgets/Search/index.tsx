@@ -1,31 +1,31 @@
-import { useQuery } from '@apollo/client';
-import { ChangeEvent, useEffect, useRef } from 'react';
+import { useUnit } from 'effector-react';
+import { useRef } from 'react';
 
 import { Input } from '@/shared';
 import { debounceFunction } from '@/src/helpers';
-import { SearchRepos } from '@/src/queries/search';
+import { useSearch } from '@/src/hooks';
+import { $pagination, setPagination } from '@/src/store';
 
 export const Search = () => {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const { data, refetch } = useQuery(SearchRepos, {
-		variables: {
-			query: '',
-		},
+	const { limit, isUserInfo, search } = useUnit($pagination);
+
+	useSearch({
+		limit: Number(limit) || 100,
+		query: search,
+		skip: isUserInfo,
 	});
 
-	useEffect(() => {
-		if (data) {
-			// Test Data
-			const { search } = data;
-			console.log(search);
-		}
-	}, [data]);
-
-	const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const searchText = e.target.value;
-		debounceFunction(1000)(() => {
-			void refetch({ query: searchText });
+	const debounced = debounceFunction(() => {
+		setPagination({
+			search: inputRef.current?.value,
+			loading: true,
+			isUserInfo: inputRef.current?.value.length === 0,
 		});
+	}, 500);
+
+	const handleChange = () => {
+		debounced();
 	};
 
 	return (

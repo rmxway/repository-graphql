@@ -1,13 +1,19 @@
 import { css } from 'styled-components';
 
+import { media } from '@/src/theme/media';
+
 export const base = css`
 	* {
 		box-sizing: border-box;
 	}
 
+	html {
+		font-size: 14px;
+	}
+
 	html,
 	body {
-		height: 100%;
+		height: 100%;		
 	}
 
 	body {
@@ -17,8 +23,9 @@ export const base = css`
 		flex-direction: column;
 		align-items: normal;
 		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS',
-			sans-serif;
+			sans-serif;		
 		background-color: #fafafa;
+		min-width: 300px;
 	}
 
 	a {
@@ -52,4 +59,10 @@ export const base = css`
 	h5 {
 		font-size: 1rem;
 	}
+
+	${media.greaterThan('small')`
+		html {
+			font-size: 16px;
+		}
+	`}	
 `;

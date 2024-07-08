@@ -27,6 +27,7 @@
 		"react-router-dom": "^6.24.0",
 		"sass": "^1.77.6",
 		"styled-components": "^6.1.11",
+		"styled-media-queries": "^1.0.1",
 		"styled-media-query": "^2.1.2"
 	},
 	"devDependencies": {

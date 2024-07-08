@@ -7,7 +7,11 @@ const spanDelay = (count: number) => css`
 `;
 
 export const LoaderWrapper = styled.div`
-	position: relative;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	z-index: 1;
+	transform: translate(-50%, 100%);
 	width: 40px;
 	height: 40px;
 	margin: 0 auto;
@@ -24,7 +28,7 @@ export const LoaderWrapper = styled.div`
 
 	opacity: 0;
 
-	animation: fadeIn 1s 1s forwards;
+	animation: fadeIn .5s 1s forwards;
 
 	@keyframes rotateCircle {
 		0% {

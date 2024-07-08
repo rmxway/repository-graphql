@@ -2,19 +2,28 @@ import { useUnit } from 'effector-react';
 
 import { Loader } from '@/shared';
 import { RepositoryCard } from '@/shared/RepositoryCard';
-import useRepos from '@/src/hooks/useRepos';
-import { $pagination, setPage } from '@/src/store';
+import { useUserRepos } from '@/src/hooks';
+import { $pagination, $repos, setPagination } from '@/src/store';
 import { Pagination, Search } from '@/widgets';
 
 import { GridForRepos } from './styled';
 
 export const MainPage = () => {
-	const { error, loading, repos } = useRepos({ limit: 50, perPage: 4 });
-	const { viewer } = repos;
-	const { page, perPage } = useUnit($pagination);
+	useUserRepos({
+		perPage: 4,
+		limit: 100,
+	});
+
+	const { page, perPage, isUserInfo, loading, error } = useUnit($pagination);
+
+	const repos = useUnit($repos);
+	const { userRepos, searchRepos } = repos;
+
+	const currentRepos =
+		isUserInfo || !searchRepos?.repos ? userRepos : searchRepos;
 
 	const handleChangePage = (page: number) => {
-		setPage(page);
+		setPagination({ page });
 	};
 
 	if (error) return <pre>{JSON.stringify(error, null, 4)}</pre>;
@@ -22,22 +31,22 @@ export const MainPage = () => {
 	return (
 		<>
 			<Search />
-			{loading && <Loader isLoading />}
-			{!error && !loading && viewer && (
+			{!error && page && (
 				<>
-					<div>User: {viewer?.login}</div>
-					<div>Name: {viewer?.name}</div>
-					<GridForRepos>
-						{viewer?.repositories?.edges
+					<GridForRepos $isLoading={loading}>
+						{currentRepos?.repos
 							?.slice((page - 1) * perPage, perPage * page)
 							.map((edge, idx) => (
 								<RepositoryCard key={idx} {...edge?.node} />
 							))}
+						<Loader isLoading={loading} />
+						{currentRepos?.count === 0 && (
+							<p>Repositories not found</p>
+						)}
 					</GridForRepos>
+
 					<Pagination
-						items={viewer?.repositories?.totalCount || 0}
-						itemsPerPage={perPage}
-						page={page}
+						items={currentRepos?.count || 0}
 						changePage={handleChangePage}
 					/>
 				</>

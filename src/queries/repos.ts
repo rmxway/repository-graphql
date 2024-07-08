@@ -1,14 +1,14 @@
 import { graphql } from '@/src/gql';
 
 export const GetRepos = graphql(/* GraphQL */ `
-	query GetRepos($limit: Int!, $after: String) {
+	query GetRepos($first: Int!, $after: String) {
 		viewer {
 			login
 			name
 			repositories(
-				first: $limit				
+				first: $first
 				after: $after
-				ownerAffiliations:OWNER
+				ownerAffiliations: OWNER
 				visibility: PUBLIC
 				orderBy: { field: UPDATED_AT, direction: DESC }
 			) {
@@ -32,7 +32,7 @@ export const GetRepos = graphql(/* GraphQL */ `
 
 export const RepositoryOnMainPage = graphql(`
 	fragment RepositoryOnMainPage on Repository {
-		name		
+		name
 		url
 		updatedAt
 		stargazerCount

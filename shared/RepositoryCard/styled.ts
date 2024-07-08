@@ -6,7 +6,7 @@ export const RepositoryCardWrapper = styled.div`
 	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 	padding: 10px;
 	border-radius: 8px;
-	transition: 0.2s;
+	transition: box-shadow 0.2s;		
 
 	&:hover {
 		top: -1px;
@@ -17,10 +17,15 @@ export const RepositoryCardWrapper = styled.div`
 	grid-auto-flow: row;
 	justify-content: start;
 	gap: 4px;
+
+	a {
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
+	}
 `;
 
 export const TopBlock = styled.div`
-	position: relative;
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
@@ -28,6 +33,9 @@ export const TopBlock = styled.div`
 	& > span {
 		font-size: 1.25rem;
 		display: inline-block;
-		margin-right: 10px;
+		margin-right: 10px;		
+		text-overflow: ellipsis;
+		overflow: hidden;
+		white-space: nowrap;
 	}
 `;
