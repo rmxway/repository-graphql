@@ -3,13 +3,15 @@ import { forwardRef, InputHTMLAttributes } from 'react';
 import { InputWrapper } from './styled';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-	// add props
+	isFilled?: boolean;
+	clear?: () => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-	({ id, ...props }, ref) => (
+	({ id, isFilled, clear, ...props }, ref) => (
 		<InputWrapper htmlFor={id}>
-			<input ref={ref} id={id} {...props} />
+			{isFilled && <span onClick={clear}>&times;</span>}
+			<input {...{ ref, id }} {...props} autoComplete="off" />
 		</InputWrapper>
 	),
 );

@@ -3,27 +3,34 @@ import { useUnit } from 'effector-react';
 import { Loader } from '@/shared';
 import { RepositoryCard } from '@/shared/RepositoryCard';
 import { useUserRepos } from '@/src/hooks';
-import { $pagination, $repos, setPagination } from '@/src/store';
+import { $pagination, $repos, setAfter, setPagination } from '@/src/store';
 import { Pagination, Search } from '@/widgets';
 
 import { GridForRepos } from './styled';
 
 export const MainPage = () => {
 	useUserRepos({
-		perPage: 4,
+		perPage: 10,
 		limit: 100,
 	});
 
-	const { page, perPage, isUserInfo, loading, error } = useUnit($pagination);
+	const { page, perPage, pageByNewFetch, isUserInfo, loading, error } =
+		useUnit($pagination);
 
 	const repos = useUnit($repos);
 	const { userRepos, searchRepos } = repos;
 
 	const currentRepos =
-		isUserInfo || !searchRepos?.repos ? userRepos : searchRepos;
+		isUserInfo || (loading && !searchRepos?.count)
+			? userRepos
+			: searchRepos;
 
 	const handleChangePage = (page: number) => {
-		setPagination({ page });
+		if (page > pageByNewFetch) setAfter(String(currentRepos?.lastCursor));
+		setPagination({
+			page,
+			clearFetch: false,
+		});
 	};
 
 	if (error) return <pre>{JSON.stringify(error, null, 4)}</pre>;
@@ -48,6 +55,7 @@ export const MainPage = () => {
 					<Pagination
 						items={currentRepos?.count || 0}
 						changePage={handleChangePage}
+						maxCount={10}
 					/>
 				</>
 			)}

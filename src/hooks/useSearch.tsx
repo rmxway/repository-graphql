@@ -1,16 +1,26 @@
 import { useQuery } from '@apollo/client';
+import { useEffect } from 'react';
 
 import { SearchRepos } from '@/src/queries';
 import { setPagination, setRepos } from '@/src/store';
 
 interface UseSearchProps {
 	limit: number;
-	after?: string;
-	query: string;
+	perPage: number;
 	skip: boolean;
+	query: string;
+	after?: string;
+	clear?: boolean;
 }
 
-export const useSearch = ({ limit, after, query, skip }: UseSearchProps) => {
+export const useSearch = ({
+	limit,
+	perPage,
+	query,
+	skip,
+	after,
+	clear,
+}: UseSearchProps) => {
 	const { error, loading } = useQuery(SearchRepos, {
 		variables: {
 			first: limit,
@@ -21,19 +31,42 @@ export const useSearch = ({ limit, after, query, skip }: UseSearchProps) => {
 		onCompleted: (newData) => {
 			const { search } = newData;
 
-			if (search) {
+			if (search && search.edges) {
 				setRepos({
-					searchRepos: {
-						count: search?.repositoryCount,
-						repos: search?.edges,
+					data: {
+						searchRepos: {
+							count: search?.repositoryCount,
+							repos: search?.edges,
+							lastCursor:
+								(search.repositoryCount > limit &&
+									String(search?.edges[limit - 1]?.cursor)) ||
+								'',
+						},
 					},
+					clear,
 				});
-				setPagination({
-					loading,
-					error: error?.message,
-				});
+
+				clear &&
+					setPagination({
+						page: 1,
+						pageByNewFetch: Math.round(perPage / 2),
+					});
 			}
 		},
 	});
+
+	useEffect(() => {
+		setPagination({
+			pageByNewFetch: Math.round(perPage / 2),
+		});
+	}, [perPage, query]);
+
+	useEffect(() => {
+		setPagination({
+			loading,
+			error: error?.message,
+		});
+	}, [error?.message, loading]);
 };
+
 export default useSearch;

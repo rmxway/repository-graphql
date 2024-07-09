@@ -1,7 +1,10 @@
 import { darken, desaturate } from 'polished';
 import styled, { css } from 'styled-components';
 
-export interface ButtonUIProps {
+interface CommonProps {
+	$inactive?: boolean;
+}
+export interface ButtonUIProps extends CommonProps {
 	$primary?: boolean;
 	$secondary?: boolean;
 	$danger?: boolean;
@@ -32,7 +35,7 @@ const mixinButton = ($background = '#fff', $color = '#fff') => css`
 `;
 
 export const ButtonUI = styled.button<ButtonUIProps>`
-	${({ theme, $danger, $dark, $primary, $secondary }) => css`
+	${({ theme, $danger, $dark, $primary, $secondary, $inactive }) => css`
 		position: relative;
 		border: none;
 		background: none;
@@ -66,9 +69,14 @@ export const ButtonUI = styled.button<ButtonUIProps>`
 			if ($primary) return mixinButton(theme.colors.primary);
 			if ($secondary) return mixinButton(theme.colors.secondary);
 			if ($danger) return mixinButton(theme.colors.danger);
-			if ($dark)
-				return mixinButton(theme.colors.dark);
+			if ($dark) return mixinButton(theme.colors.dark);
 			return null;
 		}}
+
+		${() =>
+			$inactive &&
+			css`
+				pointer-events: none;
+			`}
 	`}
 `;

@@ -19,9 +19,11 @@ export const useUserRepos = ({ limit, perPage }: UseReposProps) => {
 		skip: !isUserInfo,
 		onCompleted: (newData) => {
 			setRepos({
-				userRepos: {
-					count: newData.viewer.repositories.totalCount,
-					repos: newData.viewer.repositories.edges,
+				data: {
+					userRepos: {
+						count: newData.viewer.repositories.totalCount,
+						repos: newData.viewer.repositories.edges,
+					},
 				},
 			});
 			setPagination({ limit, perPage, loading, error: error?.message });

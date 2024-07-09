@@ -8,28 +8,45 @@ import { $pagination } from '@/src/store';
 interface PaginationProps {
 	items: number;
 	changePage: (page: number) => void;
+	maxCount: number;
 }
 
-export const Pagination: FC<PaginationProps> = ({ items, changePage }) => {
+/**
+ * @param items - {number} Number of items
+ * @param changePage - {function} (page:number) => void - Number of next page
+ * @param {Number} maxCount - Max number of buttons [1, 2, 3, 4]
+ * @example <Pagination items={100} changePage={(page) => fn(page)} maxCount={5} />
+ */
+
+export const Pagination: FC<PaginationProps> = ({
+	items,
+	changePage,
+	maxCount,
+}) => {
 	const { page, perPage } = useUnit($pagination);
-	const maxButtonsCount = 10;
 	const totalPages = useMemo(
 		() => Math.ceil(items / perPage),
 		[items, perPage],
 	);
 
 	const countButtons = Math.ceil(
-		totalPages >= maxButtonsCount ? maxButtonsCount : totalPages,
+		totalPages >= maxCount ? maxCount : totalPages,
 	);
 
+	const halfCountButtons = Math.round(maxCount / 2);
+
 	const start: number =
-		totalPages <= countButtons ? 0 : page - 5 < 0 ? 0 : page - 5; // 0
+		totalPages <= countButtons
+			? 0
+			: page - halfCountButtons < 0
+				? 0
+				: page - halfCountButtons;
 	const end: number =
 		totalPages <= countButtons
 			? totalPages
-			: page >= 6
-				? maxButtonsCount + page - 5
-				: maxButtonsCount;
+			: page >= halfCountButtons + 1
+				? maxCount + page - halfCountButtons
+				: maxCount;
 
 	const renderButtons = () => {
 		const arrButtons: ReturnType<typeof Button>[] = Array.from({
@@ -44,6 +61,7 @@ export const Pagination: FC<PaginationProps> = ({ items, changePage }) => {
 					key={i}
 					data-key={i}
 					$secondary={page === currentPage}
+					$inactive={page === currentPage}
 					onClick={() => changePage(currentPage)}
 				>
 					{currentPage}

@@ -29,6 +29,8 @@ export const TopBlock = styled.div`
 	display: flex;
 	flex-wrap: nowrap;
 	align-items: center;
+	text-overflow: ellipsis;
+		overflow: hidden;
 
 	& > span {
 		font-size: 1.25rem;

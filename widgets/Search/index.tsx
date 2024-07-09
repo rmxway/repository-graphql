@@ -4,28 +4,48 @@ import { useRef } from 'react';
 import { Input } from '@/shared';
 import { debounceFunction } from '@/src/helpers';
 import { useSearch } from '@/src/hooks';
-import { $pagination, setPagination } from '@/src/store';
+import { $after, $pagination, setAfter, setPagination } from '@/src/store';
 
 export const Search = () => {
 	const inputRef = useRef<HTMLInputElement>(null);
-	const { limit, isUserInfo, search } = useUnit($pagination);
+	const { page, limit, clearFetch, perPage, isUserInfo, search } =
+		useUnit($pagination);
+	const after = useUnit($after);
 
 	useSearch({
 		limit: Number(limit) || 100,
+		after,
+		perPage,
 		query: search,
 		skip: isUserInfo,
+		clear: clearFetch,
 	});
 
+	const editField = () => {
+		if (inputRef.current) {
+			setPagination({
+				search: inputRef.current?.value,
+				clearFetch: true,
+				isUserInfo: !inputRef.current?.value,
+				page: !inputRef.current?.value ? 1 : page,
+			});
+			setAfter('');
+		}
+	};
+
 	const debounced = debounceFunction(() => {
-		setPagination({
-			search: inputRef.current?.value,
-			loading: true,
-			isUserInfo: inputRef.current?.value.length === 0,
-		});
+		editField();
 	}, 500);
 
 	const handleChange = () => {
 		debounced();
+	};
+
+	const handleClear = () => {
+		if (inputRef.current) {
+			inputRef.current.value = '';
+			editField();
+		}
 	};
 
 	return (
@@ -35,6 +55,8 @@ export const Search = () => {
 			type="text"
 			placeholder="Search repositories"
 			onChange={handleChange}
+			isFilled={!!inputRef.current?.value}
+			clear={handleClear}
 		/>
 	);
 };
