@@ -14,8 +14,10 @@ import { defaultTheme, GlobalStyles } from '@/src/theme';
 
 export const mainPath = '/';
 export const graphqlURL = 'https://api.github.com/graphql';
+
 export const headers = {
-	Authorization: 'Bearer ' + process.env.TOKEN,
+	['Authorization']: 'Bearer ' + process.env.TOKEN,
+	['Content-type']: 'text/html',
 };
 
 const client = new ApolloClient({

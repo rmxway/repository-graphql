@@ -36,5 +36,10 @@ export const RepositoryOnMainPage = graphql(`
 		url
 		updatedAt
 		stargazerCount
+		owner {
+			login
+			avatarUrl
+			url
+		}
 	}
 `);

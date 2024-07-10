@@ -2,11 +2,14 @@ import { useUnit } from 'effector-react';
 
 import { Loader } from '@/shared';
 import { RepositoryCard } from '@/shared/RepositoryCard';
+import { SkeletonRepositoryCard } from '@/shared/RepositoryCard/SkeletonRepositoryCard';
 import { useUserRepos } from '@/src/hooks';
 import { $pagination, $repos, setAfter, setPagination } from '@/src/store';
 import { Pagination, Search } from '@/widgets';
 
 import { GridForRepos } from './styled';
+
+const skeletonRepos = new Array(10).fill({ node: null });
 
 export const MainPage = () => {
 	useUserRepos({
@@ -14,16 +17,29 @@ export const MainPage = () => {
 		limit: 100,
 	});
 
-	const { page, perPage, pageByNewFetch, isUserInfo, loading, error } =
-		useUnit($pagination);
+	const {
+		page,
+		perPage,
+		pageByNewFetch,
+		isUserInfo,
+		loading,
+		error,
+		clearFetch,
+	} = useUnit($pagination);
 
 	const repos = useUnit($repos);
 	const { userRepos, searchRepos } = repos;
 
+	// todo: если ничего не найдено и посимвольно вводить текст, прыгает userRepos
 	const currentRepos =
 		isUserInfo || (loading && !searchRepos?.count)
 			? userRepos
 			: searchRepos;
+
+	const currentShowRepos = currentRepos?.repos?.slice(
+		(page - 1) * perPage,
+		perPage * page,
+	);
 
 	const handleChangePage = (page: number) => {
 		if (page > pageByNewFetch) setAfter(String(currentRepos?.lastCursor));
@@ -40,19 +56,23 @@ export const MainPage = () => {
 			<Search />
 			{!error && page && (
 				<>
-					<GridForRepos $isLoading={loading}>
-						{currentRepos?.repos
-							?.slice((page - 1) * perPage, perPage * page)
-							.map((edge, idx) => (
-								<RepositoryCard key={idx} {...edge?.node} />
+					<GridForRepos $isLoading={loading && clearFetch}>
+						{currentRepos?.count !== 0 &&
+							currentShowRepos?.length === 0 &&
+							skeletonRepos.map((_, idx) => (
+								<SkeletonRepositoryCard key={idx} />
 							))}
-						<Loader isLoading={loading} />
-						{currentRepos?.count === 0 && (
+						{currentShowRepos?.map((edge, idx) => (
+							<RepositoryCard key={idx} {...edge?.node} />
+						))}
+						<Loader isLoading={loading && clearFetch} />
+						{!loading && currentRepos?.count === 0 && (
 							<p>Repositories not found</p>
 						)}
 					</GridForRepos>
 
 					<Pagination
+						isLoading={loading && clearFetch}
 						items={currentRepos?.count || 0}
 						changePage={handleChangePage}
 						maxCount={10}

@@ -1,8 +1,8 @@
 import { useUnit } from 'effector-react';
+import debounce from 'lodash.debounce';
 import { useRef } from 'react';
 
 import { Input } from '@/shared';
-import { debounceFunction } from '@/src/helpers';
 import { useSearch } from '@/src/hooks';
 import { $after, $pagination, setAfter, setPagination } from '@/src/store';
 
@@ -26,15 +26,15 @@ export const Search = () => {
 			setPagination({
 				search: inputRef.current?.value,
 				clearFetch: true,
-				isUserInfo: !inputRef.current?.value,
-				page: !inputRef.current?.value ? 1 : page,
+				isUserInfo: !inputRef.current.value,
+				page: !inputRef.current.value ? 1 : page,
 			});
 			setAfter('');
 		}
 	};
 
-	const debounced = debounceFunction(() => {
-		editField();
+	const debounced = debounce(() => {
+		editField();		
 	}, 500);
 
 	const handleChange = () => {

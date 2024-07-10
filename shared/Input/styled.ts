@@ -5,16 +5,22 @@ export const InputWrapper = styled.label`
 		position: relative;
 		display: inline-block;
 		width: 100%;
-		margin-bottom: 20px;
+		margin-bottom: 10px;
 
 		input {
-			padding: 10px 12px;
-			border: 1px solid ${theme.colors.gray.$5};
-			border-radius: 8px;
+			padding: 16px 20px;
+			border: 1px solid ${theme.colors.gray.$4};
+			border-radius: 12px;
 			background-color: white;
 			width: 100%;
 			padding-right: 50px;
 			outline: none;
+			font-size: 1.4rem;
+			font-weight: 100;
+
+			&::placeholder {
+				color: ${theme.colors.gray.$4};
+			}
 		}
 
 		span {
@@ -22,9 +28,9 @@ export const InputWrapper = styled.label`
 			right: 0;
 			color: ${theme.colors.gray.$5};
 			font-size: 1.5rem;
-			width: 40px;
+			width: 50px;
 			text-align: center;
-			line-height: 37px;
+			line-height: 3.5rem;
 			height: 100%;
 			opacity: 0.7;
 			transition: opacity 0.2s;

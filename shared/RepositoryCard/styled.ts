@@ -1,12 +1,27 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const RepositoryCardWrapper = styled.div`
+import { media } from '@/src/theme';
+import { SkeletonAnimation } from '@/src/theme/animations';
+
+export const RepositoryCardWrapper = styled.div<{ $skeleton?: boolean }>`
 	position: relative;
 	background-color: #fff;
 	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-	padding: 10px;
+	padding: 12px 10px;
 	border-radius: 8px;
-	transition: box-shadow 0.2s;		
+	transition: box-shadow 0.2s;
+
+	${({ $skeleton }) =>
+		$skeleton &&
+		css`
+			${SkeletonAnimation};
+			height: 95px;
+			box-shadow: none;
+
+			${media.greaterThan('small')`
+				height: 108px;
+			`}
+		`}
 
 	&:hover {
 		top: -1px;
@@ -23,6 +38,24 @@ export const RepositoryCardWrapper = styled.div`
 		overflow: hidden;
 		white-space: nowrap;
 	}
+
+	${media.greaterThan('small')`
+		padding: 14px 20px;
+	`}
+`;
+
+export const Image = styled.img`
+	position: relative;
+	height: 50px;
+	max-width: 100%;
+	border-radius: 8px;
+	display: inline-block;
+	overflow: hidden;
+	z-index: 1;
+	width: 100%;
+	background-color: ${(props) => props.theme.colors.gray.$2};
+	object-fit: cover;
+	object-position: center;
 `;
 
 export const TopBlock = styled.div`
@@ -30,12 +63,12 @@ export const TopBlock = styled.div`
 	flex-wrap: nowrap;
 	align-items: center;
 	text-overflow: ellipsis;
-		overflow: hidden;
+	overflow: hidden;
 
 	& > span {
 		font-size: 1.25rem;
 		display: inline-block;
-		margin-right: 10px;		
+		margin-right: 10px;
 		text-overflow: ellipsis;
 		overflow: hidden;
 		white-space: nowrap;

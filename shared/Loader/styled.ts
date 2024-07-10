@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import { FadeIn } from '@/src/theme/animations';
+
 const spanDelay = (count: number) => css`
 	& > span:nth-child(${count}) {
 		animation-delay: ${`0.${count}s`};
@@ -11,24 +13,12 @@ export const LoaderWrapper = styled.div`
 	left: 50%;
 	top: 50%;
 	z-index: 1;
-	transform: translate(-50%, 100%);
+	transform: translate(-50%, -50%);
 	width: 40px;
 	height: 40px;
 	margin: 0 auto;
 
-	@keyframes fadeIn {
-		0% {
-			opacity: 0;
-		}
-
-		100% {
-			opacity: 1;
-		}
-	}
-
-	opacity: 0;
-
-	animation: fadeIn .5s 1s forwards;
+	${FadeIn}
 
 	@keyframes rotateCircle {
 		0% {

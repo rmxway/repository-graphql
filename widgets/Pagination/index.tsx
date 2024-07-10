@@ -1,11 +1,13 @@
-import { useUnit } from 'effector-react';
-import { FC, useMemo } from 'react';
+import { FC } from 'react';
 
 import { Button } from '@/shared';
 import { Grid } from '@/shared/Layout';
-import { $pagination } from '@/src/store';
 
-interface PaginationProps {
+import { ButtonsBlock, Info, WrapperPagination } from './styled';
+import { usePagination } from './usePagination';
+
+export interface PaginationProps {
+	isLoading?: boolean;
 	items: number;
 	changePage: (page: number) => void;
 	maxCount: number;
@@ -19,75 +21,40 @@ interface PaginationProps {
  */
 
 export const Pagination: FC<PaginationProps> = ({
+	isLoading,
 	items,
 	changePage,
 	maxCount,
 }) => {
-	const { page, perPage } = useUnit($pagination);
-	const totalPages = useMemo(
-		() => Math.ceil(items / perPage),
-		[items, perPage],
-	);
-
-	const countButtons = Math.ceil(
-		totalPages >= maxCount ? maxCount : totalPages,
-	);
-
-	const halfCountButtons = Math.round(maxCount / 2);
-
-	const start: number =
-		totalPages <= countButtons
-			? 0
-			: page - halfCountButtons < 0
-				? 0
-				: page - halfCountButtons;
-	const end: number =
-		totalPages <= countButtons
-			? totalPages
-			: page >= halfCountButtons + 1
-				? maxCount + page - halfCountButtons
-				: maxCount;
-
-	const renderButtons = () => {
-		const arrButtons: ReturnType<typeof Button>[] = Array.from({
-			length: countButtons,
-		});
-
-		for (let i = start; i < end; i++) {
-			const currentPage = i + 1;
-
-			arrButtons[i] = (
-				<Button
-					key={i}
-					data-key={i}
-					$secondary={page === currentPage}
-					$inactive={page === currentPage}
-					onClick={() => changePage(currentPage)}
-				>
-					{currentPage}
-				</Button>
-			);
-
-			if (i === end) break;
-		}
-
-		return arrButtons;
-	};
+	const { renderButtons, start, perPage, viewed } = usePagination({
+		items,
+		changePage,
+		maxCount,
+	});
 
 	return (
 		items > perPage && (
-			<>
-				<Grid $gap={4} $direction="column" $mb={10}>
-					<Button
-						$dark
-						disabled={start < 1}
-						onClick={() => changePage(1)}
-					>
-						To Start
-					</Button>
-					{...renderButtons()}
+			<WrapperPagination $isLoading={isLoading}>
+				<Grid $justify="space-between" $direction="row" $align="center">
+					<ButtonsBlock $gap={4} $direction="column">
+						{start > 0 && (
+							<Button
+								$dark
+								disabled={start < 1}
+								className="to-start"
+								onClick={() => changePage(1)}
+							>
+								To Start
+							</Button>
+						)}
+						{...renderButtons()}
+					</ButtonsBlock>
+					<Info>
+						viewed: {viewed().toLocaleString('ru-RU')} /{' '}
+						{items.toLocaleString('ru-RU')}
+					</Info>
 				</Grid>
-			</>
+			</WrapperPagination>
 		)
 	);
 };

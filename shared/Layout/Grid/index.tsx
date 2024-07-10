@@ -36,6 +36,7 @@ export const Grid = styled.div<GridTypes>`
 		$gap,
 		$mb,
 	}) => css`
+		position: relative;
 		display: grid;
 		grid-template-columns: ${$templateColumns || 'auto'};
 		grid-template-rows: ${$templateRows || 'auto'};

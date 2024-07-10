@@ -7,12 +7,7 @@ export const SearchRepos = graphql(/* GraphQL */ `
 			edges {
 				cursor
 				node {
-					... on Repository {
-						name
-						url
-						updatedAt
-						stargazerCount
-					}
+					...RepositoryOnMainPage
 				}
 			}
 		}
