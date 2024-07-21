@@ -15,7 +15,8 @@ import { RepositoryPage } from '@/pages/repository';
 import App from '@/src/App';
 import { defaultTheme, GlobalStyles } from '@/src/theme';
 
-export const mainPath = '/';
+import { hostPath } from './helpers';
+
 export const graphqlURL = 'https://api.github.com/graphql';
 
 export const headers = {
@@ -31,15 +32,15 @@ const client = new ApolloClient({
 
 const browserRoutes: RouteObject[] = [
 	{
-		path: mainPath,
+		path: hostPath,
 		element: <App />,
 		children: [
 			{
-				path: mainPath,
+				path: hostPath,
 				element: <MainPage />,
 			},
 			{
-				path: `${mainPath}/repository`,
+				path: `${hostPath}repository`,
 				element: <RepositoryPage />,
 			},
 		],
