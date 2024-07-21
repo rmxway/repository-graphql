@@ -1,13 +1,16 @@
 import { useUnit } from 'effector-react';
+import { lazy } from 'react';
 
 import { Loader } from '@/shared';
 import { RepositoryCard } from '@/shared/RepositoryCard';
 import { SkeletonRepositoryCard } from '@/shared/RepositoryCard/SkeletonRepositoryCard';
 import { useUserRepos } from '@/src/hooks';
 import { $pagination, $repos, setAfter, setPagination } from '@/src/store';
-import { Pagination, Search } from '@/widgets';
 
 import { GridForRepos } from './styled';
+
+const Search = lazy(() => import('@/widgets/Search'));
+const Pagination = lazy(() => import('@/widgets/Pagination'));
 
 const skeletonRepos = new Array(10).fill({ node: null });
 

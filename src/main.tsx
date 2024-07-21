@@ -3,13 +3,16 @@ import '@/src/assets/fonts/icofont/icofont.scss';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+	createBrowserRouter,
+	RouteObject,
+	RouterProvider,
+} from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import { MainPage } from '@/pages/main';
 import { RepositoryPage } from '@/pages/repository';
 import App from '@/src/App';
-import { GraphiQLComponent } from '@/src/GraphiQL';
 import { defaultTheme, GlobalStyles } from '@/src/theme';
 
 export const mainPath = '/';
@@ -26,7 +29,7 @@ const client = new ApolloClient({
 	headers,
 });
 
-const router = createBrowserRouter([
+const browserRoutes: RouteObject[] = [
 	{
 		path: mainPath,
 		element: <App />,
@@ -41,11 +44,9 @@ const router = createBrowserRouter([
 			},
 		],
 	},
-	{
-		path: `${mainPath}/__graphql`,
-		element: <GraphiQLComponent />,
-	},
-]);
+];
+
+const router = createBrowserRouter(browserRoutes);
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(

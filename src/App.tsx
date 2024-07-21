@@ -1,14 +1,16 @@
+import { lazy } from 'react';
 import { Outlet } from 'react-router-dom';
 
-import { Navigation } from '@/shared';
-
+import { isDev } from './helpers';
 import { Wrapper } from './styled';
+
+const Navigation = lazy(() => import('@/shared/Navigation'));
 
 function App() {
 	return (
 		<Wrapper>
 			<h1>Repository GraphQL</h1>
-			{process.env.NODE_ENV !== 'production' && <Navigation />}
+			{isDev ? <Navigation /> : null}
 			<Outlet />
 		</Wrapper>
 	);

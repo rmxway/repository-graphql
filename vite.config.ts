@@ -12,6 +12,10 @@ export default defineConfig({
 			'@': path.resolve(__dirname, './'),
 		},
 	},
+	build: {
+		outDir: './build',
+		emptyOutDir: true,
+	},
 	define: {
 		'process.env.CLIENT_ID': JSON.stringify(env.CLIENT_ID),
 		'process.env.CLIENT_SECRET': JSON.stringify(env.CLIENT_SECRET),
