@@ -28,25 +28,27 @@ export const usePagination = ({
 
 	const halfCountButtons = Math.round(maxCount / 2);
 
-	const start: number =
-		totalPages <= countButtons
-			? 0
-			: page - halfCountButtons < 0
-				? 0
-				: page - halfCountButtons;
-	const end: number =
-		totalPages <= countButtons
-			? totalPages
-			: page >= halfCountButtons + 1
-				? maxCount + page - halfCountButtons
-				: maxCount;
+	const start = useMemo(() => {
+		if (totalPages <= countButtons || page - halfCountButtons < 0) return 0;
+		return totalPages - halfCountButtons < page
+			? totalPages - maxCount
+			: page - halfCountButtons;
+	}, [countButtons, halfCountButtons, maxCount, page, totalPages]);
 
-	const viewed = (): number => {
+	const end = useMemo(() => {
+		if (totalPages <= countButtons || totalPages - halfCountButtons < page)
+			return totalPages;
+		return page >= halfCountButtons + 1
+			? maxCount + page - halfCountButtons
+			: maxCount;
+	}, [countButtons, halfCountButtons, maxCount, page, totalPages]);
+
+	const viewed = useMemo(() => {
 		if (totalPages !== page) {
 			return page * perPage;
 		}
 		return items;
-	};
+	}, [items, page, perPage, totalPages]);
 
 	const renderButtons = useCallback(() => {
 		const arrButtons: ReturnType<typeof Button>[] = Array.from({

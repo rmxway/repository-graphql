@@ -50,7 +50,7 @@ export const Pagination: FC<PaginationProps> = ({
 						{...renderButtons()}
 					</ButtonsBlock>
 					<Info>
-						viewed: {viewed().toLocaleString('ru-RU')} /{' '}
+						viewed: {viewed.toLocaleString('ru-RU')} /{' '}
 						{items.toLocaleString('ru-RU')}
 					</Info>
 				</Grid>
