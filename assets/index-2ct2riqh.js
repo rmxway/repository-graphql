@@ -1,1 +1,0 @@
-import{j as a,N as s,h as t,i as r}from"./index-0hQsQJs9.js";const i=()=>a.jsxs(s,{children:[a.jsx(t,{to:r,end:!0,children:"Main"}),a.jsx(t,{to:`${r}__graphql`,end:!0,target:"_blank",children:"GraphQL"})]});export{i as Navigation,i as default};
