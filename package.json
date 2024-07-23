@@ -2,7 +2,6 @@
 	"name": "repository-graphql",
 	"private": true,
 	"version": "0.0.0",
-	"homepage": "https://rmxway.github.io/repository-graphql",
 	"type": "module",
 	"scripts": {
 		"dev": "vite",
