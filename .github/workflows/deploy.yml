@@ -12,15 +12,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build
-        env:
-          TOKEN: ${{ secrets.TOKEN }}
         run: |
           yarn
           yarn build
+        env:
+          TOKEN: ${{ secrets.TOKEN }}
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FOLDER: dist
+          CLEAN: true
         
   
         
