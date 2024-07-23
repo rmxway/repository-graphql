@@ -15,10 +15,6 @@ export default defineConfig({
 		},
 	},
 	base: hostPath,
-	build: {
-		outDir: './build',
-		emptyOutDir: true,
-	},
 	define: {
 		'process.env.TOKEN': JSON.stringify(env.TOKEN),
 	},
