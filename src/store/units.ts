@@ -1,31 +1,8 @@
 import { createEvent, createStore } from 'effector';
 
-import { GetReposQuery, SearchReposQuery } from '@/src/gql/graphql';
+import { isDev } from '@/src/helpers';
 
-interface Pagination {
-	page: number;
-	pageByNewFetch: number;
-	perPage: number;
-	clearFetch: boolean;
-	limit: number;
-	search: string;
-	isUserInfo: boolean;
-	loading: boolean;
-	error: string;
-}
-
-interface ReposInitialState {
-	searchRepos: {
-		count: number;
-		repos: SearchReposQuery['search']['edges'];
-		lastCursor?: string;
-	};
-	userRepos: {
-		count: number;
-		repos: GetReposQuery['viewer']['repositories']['edges'];
-		lastCursor?: string;
-	};
-}
+import { Pagination, ReposInitialState, Repository } from '.';
 
 const paginationInitialState: Pagination = {
 	page: 1,
@@ -40,9 +17,9 @@ const paginationInitialState: Pagination = {
 };
 
 export const $repos = createStore<Partial<ReposInitialState>>({});
+export const $repository = createStore<Partial<Repository>>({});
 export const $pagination = createStore(paginationInitialState);
 export const $after = createStore<string | undefined>('');
-
 export const $searchRepos = createStore<
 	ReposInitialState['searchRepos']['repos']
 >([]);
@@ -51,14 +28,10 @@ export const setRepos = createEvent<{
 	data: Partial<ReposInitialState>;
 	clear?: boolean;
 }>();
-export const addSearchRepos = createEvent();
+export const setRepository = createEvent<Partial<Repository>>();
 export const setPagination = createEvent<Partial<Pagination>>();
 export const setAfter = createEvent<string>();
-
-$repos.on(setRepos, (state, data) => ({
-	...state,
-	...data,
-}));
+export const addSearchRepos = createEvent();
 
 $repos.on(setRepos, (state, { data, clear }) => {
 	const { searchRepos } = data;
@@ -80,6 +53,8 @@ $repos.on(setRepos, (state, { data, clear }) => {
 			};
 });
 
+$repository.on(setRepository, (_, data) => data);
+
 $pagination.on(setPagination, (state, data) => {
 	const cond = (data.page ?? state.page) > state.pageByNewFetch;
 
@@ -97,6 +72,9 @@ $pagination.on(setPagination, (state, data) => {
 $after.on(setAfter, (_, after) => after);
 
 /* Watches */
-$repos.watch((data) => console.log(data.searchRepos));
-$pagination.watch(console.log);
-$after.watch((after) => console.log('After: ', after));
+if (isDev) {
+	$repos.watch((data) => console.log(data.searchRepos));
+	$repository.watch((data) => console.log('repository: ', data));
+	$pagination.watch(console.log);
+	$after.watch((after) => console.log('After: ', after));
+}

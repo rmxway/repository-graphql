@@ -34,7 +34,7 @@ export const Search = () => {
 	};
 
 	const debounced = debounce(() => {
-		editField();		
+		editField();
 	}, 500);
 
 	const handleChange = () => {
@@ -53,6 +53,7 @@ export const Search = () => {
 			ref={inputRef}
 			id="search"
 			type="text"
+			defaultValue={search}
 			placeholder="Search repositories"
 			onChange={handleChange}
 			isFilled={!!inputRef.current?.value}

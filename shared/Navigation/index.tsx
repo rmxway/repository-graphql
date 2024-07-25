@@ -7,10 +7,10 @@ import { NavigationWrapper } from './styled';
 
 export const Navigation: FC = () => (
 	<NavigationWrapper>
-		<NavLink to={hostPath} end>
+		<NavLink to={`${hostPath}/`} end>
 			Main
 		</NavLink>
-		<NavLink to={`${hostPath}__graphql`} end target="_blank">
+		<NavLink to={`${hostPath}/graphql`} end target="_blank">
 			GraphQL
 		</NavLink>
 	</NavigationWrapper>

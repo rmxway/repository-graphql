@@ -42,6 +42,7 @@ export const Grid = styled.div<GridTypes>`
 		grid-template-rows: ${$templateRows || 'auto'};
 		grid-auto-flow: ${$direction};
 		justify-content: ${$justify || 'flex-start'};
+		justify-items: ${$justify || 'flex-start'};
 		align-items: ${$align || 'stretch'};
 		gap: ${$gap ? `${$gap}px` : 0};
 		margin-bottom: ${$mb ? `${$mb}px` : 0};

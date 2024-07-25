@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { media } from '@/src/theme';
@@ -58,8 +59,9 @@ export const Image = styled.img`
 	object-position: center;
 `;
 
-export const TopBlock = styled.div`
+export const TopBlock = styled(NavLink)`
 	display: flex;
+	text-decoration: none;
 	flex-wrap: nowrap;
 	align-items: center;
 	text-overflow: ellipsis;

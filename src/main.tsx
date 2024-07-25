@@ -15,7 +15,8 @@ import { RepositoryPage } from '@/pages/repository';
 import App from '@/src/App';
 import { defaultTheme, GlobalStyles } from '@/src/theme';
 
-import { hostPath } from './helpers';
+import { GraphiQLComponent } from './GraphiQL';
+import { hostPath, isDev } from './helpers';
 
 export const graphqlURL = 'https://api.github.com/graphql';
 
@@ -40,12 +41,19 @@ const browserRoutes: RouteObject[] = [
 				element: <MainPage />,
 			},
 			{
-				path: `${hostPath}repository`,
+				path: `${hostPath}/repository`,
 				element: <RepositoryPage />,
 			},
 		],
 	},
 ];
+
+if (isDev && GraphiQLComponent) {
+	browserRoutes.push({
+		path: `${hostPath}/graphql`,
+		element: <GraphiQLComponent />,
+	});
+}
 
 const router = createBrowserRouter(browserRoutes);
 
