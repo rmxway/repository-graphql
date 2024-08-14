@@ -2,7 +2,7 @@ import { createEvent, createStore } from 'effector';
 
 import { isDev } from '@/src/helpers';
 
-import { Pagination, ReposInitialState, Repository } from '.';
+import { Pagination, Repository, SearchRepoSate, UserRepoState } from '.';
 
 const paginationInitialState: Pagination = {
 	page: 1,
@@ -16,16 +16,16 @@ const paginationInitialState: Pagination = {
 	error: '',
 };
 
-export const $repos = createStore<Partial<ReposInitialState>>({});
+export const $userRepo = createStore<Partial<UserRepoState>>({});
+export const $searchRepos = createStore<Partial<SearchRepoSate>>({});
 export const $repository = createStore<Partial<Repository>>({});
 export const $pagination = createStore(paginationInitialState);
 export const $after = createStore<string | undefined>('');
-export const $searchRepos = createStore<
-	ReposInitialState['searchRepos']['repos']
->([]);
 
-export const setRepos = createEvent<{
-	data: Partial<ReposInitialState>;
+export const setUserRepo = createEvent<UserRepoState>({});
+
+export const setSearchRepos = createEvent<{
+	data: Partial<SearchRepoSate>;
 	clear?: boolean;
 }>();
 export const setRepository = createEvent<Partial<Repository>>();
@@ -33,23 +33,16 @@ export const setPagination = createEvent<Partial<Pagination>>();
 export const setAfter = createEvent<string>();
 export const addSearchRepos = createEvent();
 
-$repos.on(setRepos, (state, { data, clear }) => {
-	const { searchRepos } = data;
+$userRepo.on(setUserRepo, (_, data) => data);
 
+$searchRepos.on(setSearchRepos, (state, { data, clear }) => {	
 	return clear
-		? { ...state, ...data }
+		? { ...data }
 		: {
 				...state,
-				...data,
-				searchRepos: {
-					count: searchRepos?.count || 0,
-					repos:
-						[
-							...(state.searchRepos?.repos || []),
-							...(searchRepos?.repos || []),
-						] || [],
-					lastCursor: searchRepos?.lastCursor || '',
-				},
+				count: data.count || 0,
+				repos: [...(state.repos || []), ...(data.repos || [])] || [],
+				lastCursor: data.lastCursor || '',
 			};
 });
 
@@ -73,7 +66,6 @@ $after.on(setAfter, (_, after) => after);
 
 /* Watches */
 if (isDev) {
-	$repos.watch((data) => console.log(data.searchRepos));
 	$repository.watch((data) => console.log('repository: ', data));
 	$pagination.watch(console.log);
 	$after.watch((after) => console.log('After: ', after));

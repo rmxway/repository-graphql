@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useUnit } from 'effector-react';
 
 import { GetRepos } from '@/src/queries';
-import { $pagination, setPagination, setRepos } from '@/src/store';
+import { $pagination, setPagination, setUserRepo } from '@/src/store';
 
 interface UseReposProps {
 	perPage: number;
@@ -18,14 +18,11 @@ export const useUserRepos = ({ limit, perPage }: UseReposProps) => {
 		},
 		skip: !isUserInfo,
 		onCompleted: (newData) => {
-			setRepos({
-				data: {
-					userRepos: {
-						count: newData.viewer.repositories.totalCount,
-						repos: newData.viewer.repositories.edges,
-					},
-				},
+			setUserRepo({
+				count: newData.viewer.repositories.totalCount,
+				repos: newData.viewer.repositories.edges,
 			});
+			
 			setPagination({ limit, perPage, loading, error: error?.message });
 		},
 	});

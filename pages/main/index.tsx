@@ -5,7 +5,13 @@ import { Loader } from '@/shared';
 import { RepositoryCard } from '@/shared/RepositoryCard';
 import { SkeletonRepositoryCard } from '@/shared/RepositoryCard/SkeletonRepositoryCard';
 import { useUserRepos } from '@/src/hooks';
-import { $pagination, $repos, setAfter, setPagination } from '@/src/store';
+import {
+	$pagination,
+	$searchRepos,
+	$userRepo,
+	setAfter,
+	setPagination,
+} from '@/src/store';
 
 import { GridForRepos } from './styled';
 
@@ -30,14 +36,15 @@ export const MainPage = () => {
 		clearFetch,
 	} = useUnit($pagination);
 
-	const repos = useUnit($repos);
-	const { userRepos, searchRepos } = repos;
+	const userRepo = useUnit($userRepo);
+	const searchRepos = useUnit($searchRepos);
 
-	// todo: если ничего не найдено и посимвольно вводить текст, прыгает userRepos
-	const currentRepos =
-		isUserInfo || (loading && !searchRepos?.count)
-			? userRepos
-			: searchRepos;
+	const currentRepos = (function () {
+		if (isUserInfo || (loading && !searchRepos?.count && !userRepo))
+			return userRepo;
+
+		return searchRepos;
+	})();
 
 	const currentShowRepos = currentRepos?.repos?.slice(
 		(page - 1) * perPage,

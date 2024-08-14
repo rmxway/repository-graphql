@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 
-import { Button, Icon } from '@/shared';
+import { Button, Icon, Loader } from '@/shared';
 import { Grid } from '@/shared/Layout';
 import { TopBlock } from '@/shared/RepositoryCard/styled';
 import { hostPath } from '@/src/helpers';
@@ -10,8 +10,6 @@ import { Lang, RepositoryWrapper } from './styled';
 
 export const RepositoryPage = () => {
 	const { error, loading, name, repository } = useRepository();
-
-	if (loading) return <div>Loading...</div>;
 
 	return (
 		<>
@@ -28,6 +26,7 @@ export const RepositoryPage = () => {
 					$templateColumns="150px 1fr"
 					$align="center"
 				>
+					{loading && <Loader isLoading={loading} />}
 					<a
 						href={repository.owner.url}
 						target="_blank"

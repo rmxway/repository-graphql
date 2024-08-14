@@ -12,7 +12,7 @@ export const GridForRepos = styled.div<{ $isLoading: boolean }>`
 	min-height: 100px;
 
 	${media.greaterThan('small')`
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, minmax(0, 600px));		
 		gap: 20px;
 	`}
 

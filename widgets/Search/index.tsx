@@ -4,7 +4,13 @@ import { useRef } from 'react';
 
 import { Input } from '@/shared';
 import { useSearch } from '@/src/hooks';
-import { $after, $pagination, setAfter, setPagination } from '@/src/store';
+import {
+	$after,
+	$pagination,
+	setAfter,
+	setPagination,
+	setSearchRepos,
+} from '@/src/store';
 
 export const Search = () => {
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -22,6 +28,17 @@ export const Search = () => {
 	});
 
 	const editField = () => {
+		if (!inputRef.current?.value) {
+			setSearchRepos({
+				data: {
+					count: 0,
+					repos: [],
+					lastCursor: '',
+				},
+				clear: true,
+			});
+		}
+
 		if (inputRef.current) {
 			setPagination({
 				search: inputRef.current?.value,

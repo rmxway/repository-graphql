@@ -7,10 +7,21 @@ import { SkeletonAnimation } from '@/src/theme/animations';
 export const RepositoryCardWrapper = styled.div<{ $skeleton?: boolean }>`
 	position: relative;
 	background-color: #fff;
+	overflow: hidden;
 	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
 	padding: 12px 10px;
 	border-radius: 8px;
 	transition: box-shadow 0.2s;
+
+	&:after {
+		content: '';
+		position: absolute;
+		top: 40px;
+		right: 0;
+		bottom: 0;
+		width: 40px;
+		background-image: linear-gradient(to left, #fff 30%, #fff0 100%);
+	}
 
 	${({ $skeleton }) =>
 		$skeleton &&
@@ -24,20 +35,13 @@ export const RepositoryCardWrapper = styled.div<{ $skeleton?: boolean }>`
 			`}
 		`}
 
+	a {
+		text-decoration: none;
+	}
+
 	&:hover {
 		top: -1px;
 		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-	}
-
-	display: grid;
-	grid-auto-flow: row;
-	justify-content: start;
-	gap: 4px;
-
-	a {
-		text-overflow: ellipsis;
-		overflow: hidden;
-		white-space: nowrap;
 	}
 
 	${media.greaterThan('small')`
@@ -47,32 +51,35 @@ export const RepositoryCardWrapper = styled.div<{ $skeleton?: boolean }>`
 
 export const Image = styled.img`
 	position: relative;
+	width: 50px;
 	height: 50px;
 	max-width: 100%;
 	border-radius: 8px;
-	display: inline-block;
+	display: block;
 	overflow: hidden;
+	flex-shrink: 0;
+	margin-right: 10px;
 	z-index: 1;
-	width: 100%;
 	background-color: ${(props) => props.theme.colors.gray.$2};
 	object-fit: cover;
 	object-position: center;
 `;
 
 export const TopBlock = styled(NavLink)`
-	display: flex;
+	display: inline-flex;
+	align-items: center;
 	text-decoration: none;
 	flex-wrap: nowrap;
-	align-items: center;
-	text-overflow: ellipsis;
-	overflow: hidden;
+	width: 100%;
+	margin-bottom: 8px;
 
 	& > span {
 		font-size: 1.25rem;
-		display: inline-block;
 		margin-right: 10px;
-		text-overflow: ellipsis;
+
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		display: -webkit-box;
 		overflow: hidden;
-		white-space: nowrap;
 	}
 `;

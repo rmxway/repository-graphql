@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 
 import { SearchRepos } from '@/src/queries';
-import { setPagination, setRepos } from '@/src/store';
+import { setPagination, setSearchRepos } from '@/src/store';
 
 interface UseSearchProps {
 	limit: number;
@@ -32,16 +32,14 @@ export const useSearch = ({
 			const { search } = newData;
 
 			if (search && search.edges) {
-				setRepos({
+				setSearchRepos({
 					data: {
-						searchRepos: {
-							count: search?.repositoryCount,
-							repos: search?.edges,
-							lastCursor:
-								(search.repositoryCount > limit &&
-									String(search?.edges[limit - 1]?.cursor)) ||
-								'',
-						},
+						count: search?.repositoryCount,
+						repos: search?.edges,
+						lastCursor:
+							(search.repositoryCount > limit &&
+								String(search?.edges[limit - 1]?.cursor)) ||
+							'',
 					},
 					clear,
 				});

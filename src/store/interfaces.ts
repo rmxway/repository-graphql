@@ -12,17 +12,16 @@ export interface Pagination {
 	error: string;
 }
 
-export interface ReposInitialState {
-	searchRepos: {
-		count: number;
-		repos: SearchReposQuery['search']['edges'];
-		lastCursor?: string;
-	};
-	userRepos: {
-		count: number;
-		repos: GetReposQuery['viewer']['repositories']['edges'];
-		lastCursor?: string;
-	};
+export interface UserRepoState {
+	count: number;
+	repos: GetReposQuery['viewer']['repositories']['edges'];
+	lastCursor?: string;
+}
+
+export interface SearchRepoSate {
+	count: number;
+	repos: SearchReposQuery['search']['edges'];
+	lastCursor?: string;
 }
 
 export interface Repository {
