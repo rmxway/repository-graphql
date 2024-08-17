@@ -1,16 +1,19 @@
 import styled, { css } from 'styled-components';
 
-import { Grid } from '@/shared/Layout';
+import { media } from '@/src/theme';
 
-export const RepositoryWrapper = styled(Grid)`
-	margin-top: 20px;
+export const RepositoryWrapper = styled.div`
+	display: grid;
+	gap: 30px;
 	font-size: 1.2rem;
+	margin-top: 20px;
+	grid-template-columns: 80px 1fr;
 
 	img {
-		width: 150px;
-		height: 150px;
-		border-radius: 200px;
-		margin-top: 20px;
+		width: 80px;
+		height: 80px;
+		border-radius: 100%;
+		object-fit: cover;
 	}
 
 	p {
@@ -31,6 +34,15 @@ export const RepositoryWrapper = styled(Grid)`
 		font-size: 1rem;
 		color: ${({ theme }) => theme.colors.gray.$5};
 	}
+
+	${media.greaterThan('small')`
+		grid-template-columns: 150px 1fr;
+
+		img {
+			width: 150px;
+			height: 150px;
+		}
+	`}
 `;
 
 export const Lang = styled.li<{ $color: string }>`

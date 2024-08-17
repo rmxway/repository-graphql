@@ -43,10 +43,9 @@ export const ButtonUI = styled.button<ButtonUIProps>`
 		min-width: 30px;
 		text-align: center;
 		line-height: 30px;
-		padding: 0 10px;
+		padding: 0 16px;
 		color: #222;
 		border-radius: 8px;
-		// transition: 0.1s;
 		cursor: pointer;
 
 		background-color: #eee;

@@ -14,18 +14,13 @@ export const RepositoryPage = () => {
 	return (
 		<>
 			<NavLink to={`${hostPath}/`}>
-				<Button>Back</Button>
+				<Button $secondary>Back</Button>
 			</NavLink>
 			<br />
 			<br />
 			{(error || !repository) && <div>{error?.message}</div>}
 			{repository && !loading && !error && (
-				<RepositoryWrapper
-					$direction="column"
-					$gap={30}
-					$templateColumns="150px 1fr"
-					$align="center"
-				>
+				<RepositoryWrapper>
 					{loading && <Loader isLoading={loading} />}
 					<a
 						href={repository.owner.url}
