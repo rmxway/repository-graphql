@@ -43,7 +43,7 @@ export const ButtonUI = styled.button<ButtonUIProps>`
 		min-width: 30px;
 		text-align: center;
 		line-height: 30px;
-		padding: 0 16px;
+		padding: 0 10px;
 		color: #222;
 		border-radius: 8px;
 		cursor: pointer;

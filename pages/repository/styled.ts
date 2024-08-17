@@ -20,7 +20,6 @@ export const RepositoryWrapper = styled.div`
 		font-size: 1.5rem;
 		line-height: 1.2;
 		font-weight: 300;
-		margin: 10px 0;
 	}
 
 	ul {

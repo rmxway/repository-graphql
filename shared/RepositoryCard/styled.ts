@@ -71,6 +71,7 @@ export const TopBlock = styled(NavLink)`
 	text-decoration: none;
 	flex-wrap: nowrap;
 	width: 100%;
+	margin-bottom: 8px;
 
 	& > span {
 		font-size: 1.25rem;
